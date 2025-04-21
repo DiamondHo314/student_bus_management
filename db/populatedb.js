@@ -29,21 +29,22 @@ CREATE TABLE IF NOT EXISTS Bus (
     capacity INTEGER,
     driver_id VARCHAR(20) REFERENCES Driver(driver_id),
     conductor_id VARCHAR(20) REFERENCES Conductor(conductor_id),
-    runs_in VARCHAR(20) REFERENCES Route(route_id)
+    route_id VARCHAR(20) REFERENCES Route(route_id)
 );
 
 CREATE TABLE IF NOT EXISTS Users (
-    user_id VARCHAR(10) PRIMARY KEY,      
+    user_id SERIAL UNIQUE,      
     password VARCHAR(100) NOT NULL,
-    name VARCHAR(100) NOT NULL,
+    name VARCHAR(100) PRIMARY KEY NOT NULL,
     phone VARCHAR(15),
-    balance DECIMAL(10, 2) DEFAULT 0
+    balance DECIMAL(10, 2) DEFAULT 0,
+    bus_id INTEGER REFERENCES Bus(bus_id) DEFAULT NULL 
 );
 
 -- Ratings Table
 CREATE TABLE IF NOT EXISTS Ratings (
     rating_id SERIAL PRIMARY KEY,
-    given_by VARCHAR(20) REFERENCES Users(user_id),
+    username VARCHAR(100) REFERENCES Users(name),
     driver_id VARCHAR(20) REFERENCES Driver(driver_id),
     conductor_id VARCHAR(20) REFERENCES Conductor(conductor_id),
     driver_rating INTEGER CHECK (driver_rating BETWEEN 1 AND 5),
@@ -96,7 +97,7 @@ INSERT INTO Conductor (conductor_id, phone, name) VALUES
 ('cd12', '2234567801', 'Snorbit Enceladus');
 
 -- Populate Bus Table
-INSERT INTO Bus (capacity, driver_id, conductor_id, runs_in) VALUES
+INSERT INTO Bus (capacity, driver_id, conductor_id, route_id) VALUES
 (50, 'dv01', 'cd01', 'route01'),
 (45, 'dv02', 'cd02', 'route02'),
 (60, 'dv03', 'cd03', 'route03'),
