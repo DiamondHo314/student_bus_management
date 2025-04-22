@@ -6,7 +6,7 @@ async function getUserByUsername(username) {
 }
 
 async function getUsersBusRoute(user_id) {
-  const { rows } = await pool.query("select r.route_name from users u inner join bus b on u.bus_id = b.bus_id inner join route r on r.route_name = b.route_name where u.user_id = $1", [user_id])
+  const { rows } = await pool.query("select r.route_name from users u inner join bus b on u.bus_id = b.bus_id inner join route r on r.route_id = b.route_id where u.user_id = $1", [user_id])
   return rows[0]
 }
 

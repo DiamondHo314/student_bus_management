@@ -5,13 +5,15 @@ const passport = require('./config/passport')
 
 const indexRouter = require('./routes/indexRouter');
 const registerRouter = require('./routes/registerRouter');
+const loginRouter = require('./routes/loginRouter');
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 
-app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
 app.use(passport.session())
 
+app.use('/log-in', loginRouter)
 app.use('/', indexRouter)
 app.use('/register', registerRouter)
 
