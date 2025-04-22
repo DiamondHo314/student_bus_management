@@ -15,8 +15,8 @@ async function getUserBalance(user_id) {
   return rows[0]
 }
 
-async function updateUserBalance(balance) {
-  await pool.query('update users set balance = balance + $1', [balance])
+async function updateUserBalance(usr_id, balance) {
+  await pool.query('update users set balance = balance + $1 where user_id = $2', [balance, usr_id])
 }
 
 //register new user

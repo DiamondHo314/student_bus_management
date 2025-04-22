@@ -6,6 +6,31 @@ function ensureAuthenticated(req, res, next) {
     return next(); // user is authenticated, proceed to the next middleware or route handler
   }
   res.redirect('/log-in'); // redirect to the login page if not authenticated
+
+}
+
+async function updateBalance(req, res) {
+  try {
+    const userId = req.user.user_id; 
+    const { amount } = req.body    
+
+    console.log("User ID:", userId);
+    console.log("Amount to update:", amount);
+   
+
+    if (isNaN(amount) || amount <= 0) {
+      return res.status(400).send('Invalid amount');
+    }
+
+    await db.updateUserBalance(userId, amount);     
+    res.status(200).send('Balance updated successfully');
+    //200 status needed so that updatBalance function in index.ejs can work
+    //we need this 200 to because we set 'if(response.ok)', 200 status sets this as true
+
+  } catch (error) {
+    console.error('Error updating balance:', error);
+    res.status(500).send({ error: 'Internal server error' });
+  }
 }
 
 async function getUserView(req, res) {
@@ -19,5 +44,6 @@ async function getUserView(req, res) {
 
 module.exports = {
   getUserView,
-  ensureAuthenticated
+  ensureAuthenticated,
+  updateBalance,
 }

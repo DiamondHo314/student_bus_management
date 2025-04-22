@@ -19,6 +19,8 @@
             <% } %> 
             <br>
             <h3> your balance: <%= user.balance %></h3> 
+            <button type="button" class="btn btn-primary" onclick="updateBalance()">Add balance</button>
+            <br>
             <a style="color: red;" href="/log-in/log-out">LOG OUT</a>
         </div>
 
@@ -26,6 +28,36 @@
         <a href="/" class="mx-2 text-decoration-none">Home</a>
         <a href="/register" class="mx-2 text-decoration-none">Register</a>
     </footer>
+
+    <script>
+        function updateBalance() {
+            const amount = prompt("Enter balance money amount:");
+            if (amount && !isNaN(amount) && amount > 0) {
+            fetch('/update-balance', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ amount: parseFloat(amount) }), //makes sure amount is float
+                //because in db, balance datatype is float
+            })
+                .then((response) => {
+                if (response.ok) {
+                    alert('Balance updated successfully!');
+                    location.reload(); // reload the page to reflect the updated balance
+                } else {
+                    alert('Failed to update balance. Please try again.');
+                }
+                })
+                .catch((error) => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+                });
+            } else {
+            alert('Please enter a valid amount.');
+            }
+        }
+    </script>
 
 </body>
 </html>
