@@ -42,8 +42,12 @@ async function getUserView(req, res) {
   res.render("index", { user: req.user, busRouteName: users_bus_route}) //user_balance: usr_balance });
 }
 
+function getRatingView(req,res){
+  res.render("ratings")
+}
 module.exports = {
   getUserView,
   ensureAuthenticated,
   updateBalance,
+  getRatingView
 }

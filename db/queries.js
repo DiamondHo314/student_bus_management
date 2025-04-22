@@ -25,13 +25,21 @@ async function registerNewUser(username, password, phone) {
 }
 
 //add new driver
-
+async function addNewDriver(driverid, phone, name){
+  await pool.query("INSERT INTO Driver (driver_id,phone,name) VALUES ($1, $2, $3)",[driverid,phone,name]);
+}
 //add new conductor
-
+async function addNewConductor(id, phone, name){
+  await pool.query("INSERT INTO Conductor (conductor_id,phone,name) VALUES ($1, $2, $3)",[id,phone,name]);
+}
 //update driver of a bus
-
+async function updateDriver(driverid, busid){
+  await pool.query("UPDATE Bus SET driver_id = $1 WHERE bus_id= $2",[driverid,busid]);
+}
 //update conductor of a bus
-
+async function updateConductor(id, busid){
+  await pool.query("UPDATE Bus SET conductor_id = $1 WHERE bus_id= $2",[id,busid]);
+}
 //delete a user
 
 //delete a driver
@@ -51,4 +59,8 @@ module.exports = {
     getUserBalance,
     updateUserBalance,
     registerNewUser,
+    addNewDriver,
+    addNewConductor,
+    updateDriver,
+    updateConductor,
 }
