@@ -6,17 +6,17 @@ async function getUserByUsername(username) {
 }
 
 async function getUsersBusRoute(user_id) {
-  const { rows } = await pool.query("select r.route_name from users u inner join bus b on u.bus_id = b.bus_id inner join route r on r.route_id = b.route_id where u.user_id = $1", [user_id])
+  const { rows } = await pool.query("SELECT r.route_name FROM Users u INNER JOIN Bus b ON u.bus_id = b.bus_id INNER JOIN Route r ON r.route_id = b.route_id WHERE u.user_id = $1", [user_id])
   return rows[0]
 }
 
 async function getUserBalance(user_id) {
-  const { rows } = await pool.query("select balance from users where user_id = $1", [user_id])
+  const { rows } = await pool.query("SELECT balance FROM users WHERE user_id = $1", [user_id])
   return rows[0]
 }
 
-async function updateUserBalance(usr_id, balance) {
-  await pool.query('update users set balance = balance + $1 where user_id = $2', [balance, usr_id])
+async function updateUserBalance(user_id, balance) {
+  await pool.query('UPDATE Users SET balance = balance + $1 WHERE user_id = $2', [balance, user_id])
 }
 
 //register new user
