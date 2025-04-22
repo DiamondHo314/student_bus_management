@@ -38,7 +38,15 @@ async function updateDriver(driverid, busid){
 }
 //update conductor of a bus
 async function updateConductor(id, busid){
-  await pool.query("UPDATE Bus SET conductor_id = $1 WHERE bus_id= $2",[id,busid]);
+  await pool.query("UPDATE Bus SET conductor_id = $1 WHERE bus_id= $1",[id,busid]);
+}
+//user boards the bus
+async function userBoardsBus(studentid,busid) {
+  await pool.query("UPDATE Bus SET capacity = capacity -1 WHERE bus_id = $1",[busid])
+  await pool.query("UPDATE Users SET bus_id = $1 WHERE user_id=$2",[busid, studentid])
+  const price = await pool.query("SELECT price FROM Bus b INNER JOIN Route r ON b.route_id = r.route_id WHERE bus_id = $1",[busid])
+  await pool.query("UPDATE Users SET balance = balance - $1 WHERE user_id = $2",[price,studentid])
+  
 }
 //delete a user
 
@@ -51,6 +59,7 @@ async function updateConductor(id, busid){
 //add new route
 
 //add new bus
+
 
 
 module.exports = {
