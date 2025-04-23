@@ -21,13 +21,14 @@
             <h3> your balance: <%= user.balance %></h3> 
             <button type="button" class="btn btn-primary" onclick="updateBalance()">Add balance</button>
             <br>
-            <a href="/ratings">Rate Staff</a>
-            <a style="color: red;" href="/log-in/log-out">LOG OUT</a>
+            <a href="/ratings" class="btn btn-success mt-3">Rate Staff</a>
+            <a href="/log-in/log-out" class="btn btn-danger mt-3">LOG OUT</a>
         </div>
 
     <footer class="bg-light text-center py-3 mt-4">
         <a href="/" class="mx-2 text-decoration-none">Home</a>
         <a href="/register" class="mx-2 text-decoration-none">Register</a>
+
     </footer>
 
     <script>

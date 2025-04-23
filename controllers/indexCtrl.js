@@ -43,8 +43,14 @@ async function getUserView(req, res) {
   res.render("index", { user: req.user, busRouteName: users_bus_route.route_name}) //user_balance: usr_balance });
 }
 
-function getRatingView(req,res){
-  res.render("ratings")
+async function getRatingView(req, res) {
+  try {
+    const busesAndRoutes = await db.getAllBusAndRoutes(); // Fetch buses and routes
+    res.render("ratings", { busesAndRoutes }); // Pass data to the view
+  } catch (error) {
+    console.error("Error fetching buses and routes:", error);
+    res.status(500).send("Internal server error");
+  }
 }
 module.exports = {
   getUserView,
