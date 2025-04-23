@@ -11,9 +11,9 @@
         <div class="container mt-2">
             <h1 class="mb-2">WELCOME BACK <%= user.name %></h1>
             <h2>Your last ride</h2>
-            <% if (busRouteName != null) { %>
-                <% console.log('bus route name: ', busRouteName) %>
-                <p>You took <%= busRouteName %> today</p> 
+            <% if (busRouteName != undefined) { %>
+                <% console.log('bus route name: ', busRouteName.route_name) %>
+                <p>You took <%= busRouteName.route_name %> today</p> 
             <% } else { %>
                 <p>You did not take any bus yet!</p> 
             <% } %> 

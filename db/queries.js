@@ -1,4 +1,3 @@
-const { get } = require('../routes/registerRouter');
 const pool = require('./pool'); 
 
 async function getUserByUsername(username) {
@@ -94,7 +93,6 @@ async function getAllBusAndRoutes() {
   return rows;
 }
 
-//get all buses
 async function getAllBuses() {
  const { rows } = await pool.query("SELECT * FROM Bus");
  return rows;
@@ -128,6 +126,7 @@ async function getAllRatings() {
 async function getAllUsers() {
  const { rows } = await pool.query("SELECT * FROM Users");
  return rows;
+
 }
 
 

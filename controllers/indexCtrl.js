@@ -40,7 +40,7 @@ async function getUserView(req, res) {
   console.log("Users bus route:", users_bus_route);
   //const usr_balance = await db.getUserBalance(userInfo.user_id)
   // no need for the above line, we can just do user.balance in index.ejs to get the users balance
-  res.render("index", { user: req.user, busRouteName: users_bus_route.route_name}) //user_balance: usr_balance });
+  res.render("index", { user: req.user, busRouteName: users_bus_route}) //user_balance: usr_balance });
 }
 
 async function getRatingView(req, res) {

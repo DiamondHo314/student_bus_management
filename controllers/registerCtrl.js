@@ -12,7 +12,7 @@ async function registerUser(req, res) {
     // Insert the new user into the database
     await db.registerNewUser(username, hashedPassword, phone);
 
-    res.redirect("/");
+    res.redirect("/log-in");
   } catch (error) {
     console.error("Error registering user:", error);
     res.status(500).json({ error: "Internal server error" });
