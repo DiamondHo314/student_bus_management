@@ -4,19 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <title>Rating</title>
+    <title>Rate Staff</title>
+    <style>
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+        }
+        .star-rating input {
+            display: none;
+        }
+        .star-rating label {
+            font-size: 2rem;
+            color: #ddd;
+            cursor: pointer;
+        }
+        .star-rating input:checked ~ label {
+            color: #f5c518;
+        }
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: #f5c518;
+        }
+    </style>
 </head>
 <body>
-    <h1> RATE US!</h1>
-    <form>
-        <ul>
-            <li><label>Driver's Rating</label></li>
-            <input type="text">
-            <li><label>Conductor's Rating</label></li>
-            <input type="text">
-            <li><button class = "btn btn-primary mt-3">Submit</button></li>
-        </ul>
-    </form>
+    <div class="container mt-5">
+        <h1 class="text-center">Rate Staff</h1>
+        <form action="/submit-rating" method="POST">
+            <div class="form-group">
+                <label for="bus">Select Bus</label>
+                <select id="bus" name="bus" class="form-control">
+                    <% busesAndRoutes.forEach(bus => { %>
+                        <option value="<%= bus.bus_id %>">
+                            Bus ID: <%= bus.bus_id %>, Route: <%= bus.route_name %>, Price: <%= bus.price %>
+                        </option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Driver's Rating</label>
+                <div class="star-rating">
+                    <input type="radio" id="driver-star-5" name="driver_rating" value="5" required>
+                    <label for="driver-star-5">&#9733;</label>
+                    <input type="radio" id="driver-star-4" name="driver_rating" value="4">
+                    <label for="driver-star-4">&#9733;</label>
+                    <input type="radio" id="driver-star-3" name="driver_rating" value="3">
+                    <label for="driver-star-3">&#9733;</label>
+                    <input type="radio" id="driver-star-2" name="driver_rating" value="2">
+                    <label for="driver-star-2">&#9733;</label>
+                    <input type="radio" id="driver-star-1" name="driver_rating" value="1">
+                    <label for="driver-star-1">&#9733;</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Conductor's Rating</label>
+                <div class="star-rating">
+                    <input type="radio" id="conductor-star-5" name="conductor_rating" value="5" required>
+                    <label for="conductor-star-5">&#9733;</label>
+                    <input type="radio" id="conductor-star-4" name="conductor_rating" value="4">
+                    <label for="conductor-star-4">&#9733;</label>
+                    <input type="radio" id="conductor-star-3" name="conductor_rating" value="3">
+                    <label for="conductor-star-3">&#9733;</label>
+                    <input type="radio" id="conductor-star-2" name="conductor_rating" value="2">
+                    <label for="conductor-star-2">&#9733;</label>
+                    <input type="radio" id="conductor-star-1" name="conductor_rating" value="1">
+                    <label for="conductor-star-1">&#9733;</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        </form>
     </div>
 </body>
 </html>

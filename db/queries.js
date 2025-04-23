@@ -49,17 +49,49 @@ async function userBoardsBus(studentid,busid) {
   
 }
 //delete a user
-
+async function deleteUser(user_id) {
+  await pool.query("DELETE FROM Users WHERE user_id = $1", [user_id]);
+}
 //delete a driver
-
+async function deleteDriver(driver_id) {
+  await pool.query("DELETE FROM Driver WHERE driver_id = $1", [driver_id]);
+}
 //delete a conductor
-
-//add rating given by a user
-
-//add new route
-
-//add new bus
-
+async function deleteConductor(conductor_id) {
+  await pool.query("DELETE FROM Conductor WHERE conductor_id = $1", [conductor_id]);
+}
+//get driver_id and conductor_id of a bus
+async function getDriverAndConductor(bus_id) {
+  const { rows } = await pool.query("SELECT driver_id, conductor_id FROM Bus WHERE bus_id = $1", [bus_id]);
+  return rows[0];
+}
+//add rating given by a user (Rating deyar shomoy driver_id r conductor_id auto filled-up hobe? uporer query ta diye?)
+async function addRating(username, driver_id, conductor_id, driver_rating, conductor_rating) {
+  await pool.query("INSERT INTO Ratings (username, driver_id, conductor_id, driver_rating, conductor_rating) VALUES ($1, $2, $3, $4, $5)", [username, driver_id, conductor_id, driver_rating, conductor_rating]);
+}
+//add new Route
+async function addNewRoute(routeid, routename, price){
+  await pool.query("INSERT INTO Route (route_id, route_name, price) VALUES ($1, $2, $3)",[routeid,routename,price]);
+}
+//add new Bus
+async function addNewBus(busid, capacity, driverid, conductorid, routeid){
+  await pool.query("INSERT INTO Bus (bus_id, capacity, driver_id, conductor_id, route_id) VALUES ($1, $2, $3, $4, $5)",[busid,capacity,driverid,conductorid,routeid]);
+}
+//delete a bus
+async function deleteBus(bus_id) {
+  await pool.query("DELETE FROM Bus WHERE bus_id = $1", [bus_id]);
+}
+//delete a route
+async function deleteRoute(route_id) {
+  await pool.query("DELETE FROM Route WHERE route_id = $1", [route_id]);
+}
+//get all buses and routes
+async function getAllBusAndRoutes() {
+  const { rows } = await pool.query(
+    "SELECT b.bus_id, r.route_name, r.price FROM Bus b INNER JOIN Route r ON b.route_id = r.route_id"
+  );
+  return rows;
+}
 
 
 module.exports = {
@@ -73,5 +105,15 @@ module.exports = {
     updateDriver,
     updateConductor,
     userBoardsBus,
-
+    deleteUser,
+    deleteDriver,
+    deleteConductor,
+    getDriverAndConductor,
+    addRating,
+    addNewRoute,
+    addNewBus,
+    deleteBus,
+    deleteRoute,
+    getAllBusAndRoutes,
+   
 }
