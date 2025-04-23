@@ -94,6 +94,42 @@ async function getAllBusAndRoutes() {
   return rows;
 }
 
+//get all buses
+async function getAllBuses() {
+ const { rows } = await pool.query("SELECT * FROM Bus");
+ return rows;
+}
+
+//get all drivers
+async function getAllDrivers() {
+ const { rows } = await pool.query("SELECT * FROM Driver");
+ return rows;
+}
+
+//get all conductors
+async function getAllConductors() {
+ const { rows } = await pool.query("SELECT * FROM Conductor");
+ return rows;
+}
+
+//get all routes
+async function getAllRoutes() {
+ const { rows } = await pool.query("SELECT * FROM Route");
+ return rows;
+}
+
+//get all ratings
+async function getAllRatings() {
+ const { rows } = await pool.query("SELECT * FROM Ratings");
+ return rows;
+}
+
+//get all users
+async function getAllUsers() {
+ const { rows } = await pool.query("SELECT * FROM Users");
+ return rows;
+}
+
 
 module.exports = {
     getUserByUsername,
@@ -116,5 +152,11 @@ module.exports = {
     deleteBus,
     deleteRoute,
     getAllBusAndRoutes,
+    getAllBuses,
+    getAllDrivers,
+    getAllConductors,
+    getAllRoutes,
+    getAllRatings,
+    getAllUsers,
    
 }

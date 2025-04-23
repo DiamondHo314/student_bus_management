@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <title>Admin View</title>
+     <style>
+        .card {
+            padding: 20px;
+            margin: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .card a {
+            text-decoration: none;
+            color: white;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            transition: transform 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="jumbotron text-center">
+        <h2>Admin Dashboard</h2>
+    </div>
+    <br>
+
+    <div class="d-flex flex-row justify-content-center"> 
+        <div class="container padding-5 text-center">
+            <a class="card bg-info text-white" href="/admin/buses">Buses</a> <br>
+        </div>
+        <div class="container padding-5 text-center">
+            <a class="card bg-info text-white padding-5" href="/admin/staffs">Staffs</a> <br>
+        </div>
+        <div class="container padding-5 text-center">
+            <a class="card bg-info text-white padding-5"  href="/admin/routes">Routes</a> <br>
+        </div>
+        <div class="container padding-5 text-center">
+            <a class="card bg-info text-white padding-5"  href="/admin/ratings">Ratings</a> <br>
+        </div>
+        <div class="container padding-5 text-center">
+            <a class="card bg-info text-white padding-5"  href="/admin/users">Users</a> <br>
+        </div>
+    </div>
+</body>
+</html>
