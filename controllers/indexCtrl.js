@@ -14,10 +14,6 @@ async function updateBalance(req, res) {
     const userId = req.user.user_id; 
     const { amount } = req.body    
 
-    console.log("User ID:", userId);
-    console.log("Amount to update:", amount);
-   
-
     if (isNaN(amount) || amount <= 0) {
       return res.status(400).send('Invalid amount');
     }
@@ -35,9 +31,7 @@ async function updateBalance(req, res) {
 
 async function getUserView(req, res) {
   const userInfo = req.user  
-  console.log("User info:", req.user);
   const users_bus_route = await db.getUsersBusRoute(userInfo.user_id)
-  console.log("Users bus route:", users_bus_route);
   //const usr_balance = await db.getUserBalance(userInfo.user_id)
   // no need for the above line, we can just do user.balance in index.ejs to get the users balance
   res.render("index", { user: req.user, busRouteName: users_bus_route}) //user_balance: usr_balance });

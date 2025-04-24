@@ -7,51 +7,41 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7H4UibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <title>Ratings</title>
+    <title><%= title %></title>
 </head>
 <body>
     <div class="container mt-2">
-        <h1 class="text-center mb-4">Ratings</h1>
+        <h1 class="text-center mb-4"><%= title %></h1>
         <table class="table" border="1">
             <thead class="thead-dark">
                 <tr>
-                    <th>Rating ID</th>
-                    <th>Username</th>
-                    <th>Driver ID</th>
-                    <th>Conductor ID</th>
-                    <th>Driver Rating</th>
-                    <th>Conductor Rating</th>
+                    <% colNames.forEach(col =>{ %>
+                        <th><%= col %></th>
+                    <% }) %>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
-                <% ratings.forEach(rating => { %>
+                <% for (let i =0; i < rowVals.length; i++) { %>
                     <tr>
-                        <td><%= rating.rating_id %></td>
-                        <td><%= rating.username %></td>
-                        <td><%= rating.driver_id %></td>
-                        <td><%= rating.conductor_id %></td>
-                        <td><%= rating.driver_rating %></td>
-                        <td><%= rating.conductor_rating %></td>
+                        <% colNames.forEach(col => {%>
+                            <td><%= rowVals[i][col] %></td>
+                        <% }) %>
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">Edit</button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Rating ID</a>
-                                    <a class="dropdown-item" href="#">Username</a>
-                                    <a class="dropdown-item" href="#">Driver ID</a>
-                                    <a class="dropdown-item" href="#">Conductor ID</a>
-                                    <a class="dropdown-item" href="#">Driver Rating</a>
-                                    <a class="dropdown-item" href="#">Conductor Rating</a>
+                                    <% colNames.forEach(col => { %>
+                                        <a class="dropdown-item" href="#"><%= col %></a>
+                                    <% }) %>
                                 </div>
                             </div>
                         </td>
                         <td>
                             <button type="button" class="btn btn-danger">Delete</button>
                         </td>
-                    </tr>
-                <% }) %>
+                    <% } %>
             </tbody>
         </table>
     </div>
