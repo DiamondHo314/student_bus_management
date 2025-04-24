@@ -20,12 +20,22 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const buttonSound = document.getElementById('button-sound');
-            const buttons = document.querySelectorAll('button');
+            const buttons = document.querySelectorAll('button, a.btn'); // Include <a> tags with the "btn" class
 
             buttons.forEach(button => {
-                button.addEventListener('click', () => {
+                button.addEventListener('click', (event) => {
+                    const href = button.getAttribute('href'); // Get the href attribute for links
+                    const isLink = button.tagName === 'A' && href; // Check if it's a link
+
                     buttonSound.currentTime = 0; // Reset the sound to the beginning
                     buttonSound.play(); // Play the sound
+
+                    if (isLink) {
+                        event.preventDefault(); // Prevent immediate navigation
+                        setTimeout(() => {
+                            window.location.href = href; // Navigate after the sound plays
+                        }, 300); // Delay navigation by 300ms (adjust as needed)
+                    }
                 });
             });
         });
