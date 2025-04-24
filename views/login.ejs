@@ -4,27 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <title>log in</title>
+    <title>Log In</title>
+    <style>
+        .moving-buses {
+            position: relative;
+            width: 200%;
+            height: 150px; /* Adjust height as needed */
+            overflow: hidden;
+            /*background-color: #f8f9fa; /* Optional: Add a background color */
+        }
+
+        .bus-icon {
+            position: absolute;
+            width: 100px; /* Adjust the size of the bus */
+            animation: moveBus 25s linear infinite; /* Animation duration and infinite loop */
+        }
+
+        .bus-icon:nth-child(1) {
+            animation-delay: 1s; 
+        }
+
+        .bus-icon:nth-child(2) {
+            animation-delay: 3s; 
+        }
+
+        .bus-icon:nth-child(3) {
+            animation-delay: 5s; 
+        }
+        .bus-icon:nth-child(4) {
+            animation-delay: 7s; 
+        }
+        .bus-icon:nth-child(5) {
+            animation-delay: 9s; 
+        }
+        .bus-icon:nth-child(6) {
+            animation-delay: 11s; 
+        }
+        .bus-icon:nth-child(7) {
+            animation-delay: 13s; 
+        }
+        .bus-icon:nth-child(8) {
+            animation-delay: 15s; 
+        }
+        .bus-icon:nth-child(9) {
+            animation-delay: 17s; 
+        }
+        .bus-icon:nth-child(10) {
+            animation-delay: 19s; 
+        }
+        .bus-icon:nth-child(11) {
+            animation-delay: 21s; 
+        }
+        .bus-icon:nth-child(12) {
+            animation-delay: 23s; 
+        }
+        @keyframes moveBus {
+            0% {
+                left: -60px; /* Start off-screen to the left */
+            }
+            100% {
+                left: 100%; /* Move off-screen to the right */
+            }
+        }
+    </style>
 </head>
 <body>
-    
+    <!-- Moving buses at the top -->
+    <div class="moving-buses">
+        <img src="/bus.png" alt="Bus" class="bus-icon">
+        <img src="/bus.png" alt="Bus" class="bus-icon">
+        <img src="/bus.png" alt="Bus" class="bus-icon">
+        <img src="/bus.png" alt="Bus" class="bus-icon">
+        <img src="/bus.png" alt="Bus" class="bus-icon">
+        <img src="/bus.png" alt="Bus" class="bus-icon">
+        <img src="/bus.png" alt="Bus" class="bus-icon">
+        <img src="/bus.png" alt="Bus" class="bus-icon">
+        <img src="/bus.png" alt="Bus" class="bus-icon">
+        <img src="/bus.png" alt="Bus" class="bus-icon">
+        <img src="/bus.png" alt="Bus" class="bus-icon">
+        <img src="/bus.png" alt="Bus" class="bus-icon">
+        
+    </div>
+
+    <!-- Main content -->
     <div class="d-flex flex-column align-items-center vh-100 justify-content-center">
-        <h1 class="text-center mb-4">please log in</h1>
+        <h1 class="text-center mb-4">Please Log In</h1>
         <div class="card p-4" style="width: 400px;">
-            
             <form action="/log-in" method="POST">
-
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input id="username" class="form-control" name="username" placeholder="username" type="text" />
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input id="password" class="form-control" name="password" type="password" />
-            </div>
-
-            <button type="submit" class="btn btn-primary">Log In</button>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input id="username" class="form-control" name="username" placeholder="Username" type="text" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" class="form-control" name="password" type="password" />
+                </div>
+                <button type="submit" class="btn btn-primary">Log In</button>
             </form>
         </div>
     </div>
