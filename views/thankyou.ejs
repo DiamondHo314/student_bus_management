@@ -7,11 +7,26 @@
     <title>Thank You</title>
 </head>
 <body>
+    <audio id="button-sound" src="/button_click.mp3" preload="auto"></audio>
     <div class="container mt-5 text-center">
         <h1>Thank You for Rating!</h1>
         <p>Your feedback helps us improve our service.</p>
         <a href="/ratings" class="btn btn-primary mt-3">Rate Again</a>
         <a href="/" class="btn btn-secondary mt-3">Go to Home</a>
     </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttonSound = document.getElementById('button-sound');
+            const buttons = document.querySelectorAll('button, a.btn'); // Include <a> tags with the "btn" class
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    buttonSound.currentTime = 0; // Reset the sound to the beginning
+                    buttonSound.play(); // Play the sound
+                });
+            });
+        });
+    </script>
 </body>
 </html>

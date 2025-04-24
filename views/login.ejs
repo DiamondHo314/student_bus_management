@@ -33,5 +33,21 @@
         <a href="/" class="mx-2 text-decoration-none">Home</a>
         <a href="/register" class="mx-2 text-decoration-none">Register</a>
     </footer>
+
+    <audio id="button-sound" src="/button_click.mp3" preload="auto"></audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttonSound = document.getElementById('button-sound');
+            const buttons = document.querySelectorAll('button');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    buttonSound.currentTime = 0; // Reset the sound to the beginning
+                    buttonSound.play(); // Play the sound
+                });
+            });
+        });
+    </script>
 </body>
 </html>

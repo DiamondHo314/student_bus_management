@@ -8,6 +8,7 @@
 </head>
 <body>
     <body>
+        <audio id="button-sound" src="/button_click.mp3" preload="auto"></audio>
         <div class="container mt-2">
             <h1 class="mb-2">WELCOME BACK <%= user.name %></h1>
             <h2>Your last ride</h2>
@@ -28,11 +29,14 @@
     <footer class="bg-light text-center py-3 mt-4">
         <a href="/" class="mx-2 text-decoration-none">Home</a>
         <a href="/register" class="mx-2 text-decoration-none">Register</a>
-
+        
     </footer>
 
     <script>
         function updateBalance() {
+            const buttonSound = document.getElementById('button-sound'); // Get the sound element
+            buttonSound.currentTime = 0; // Reset the sound to the beginning
+            buttonSound.play(); // Play the sound
             const amount = prompt("Enter balance money amount:");
             if (amount && !isNaN(amount) && amount > 0) {
             fetch('/update-balance', {
@@ -59,6 +63,18 @@
             alert('Please enter a valid amount.');
             }
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttonSound = document.getElementById('button-sound');
+            const buttons = document.querySelectorAll('button, a.btn'); // Include <a> tags with the "btn" class
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    buttonSound.currentTime = 0; // Reset the sound to the beginning
+                    buttonSound.play(); // Play the sound
+                });
+            });
+        });
     </script>
 
 </body>
