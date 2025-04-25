@@ -1,3 +1,4 @@
+const { get } = require('../routes/indexRouter');
 const pool = require('./pool'); 
 
 async function getUserByUsername(username) {
@@ -41,25 +42,27 @@ async function updateConductor(id, busid){
   await pool.query("UPDATE Bus SET conductor_id = $1 WHERE bus_id= $1",[id,busid]);
 }
 //user boards the bus
-async function userBoardsBus(studentid,busid) {
-  await pool.query("UPDATE Bus SET capacity = capacity -1 WHERE bus_id = $1",[busid])
+async function userBoardsBus(studentid, routeid) {
+  const { rows: busRows } = await pool.query("SELECT bus_id FROM Bus WHERE route_id = $1", [routeid]);
+  const busid = busRows[0]?.bus_id;
+
+  //await pool.query("UPDATE Bus SET capacity = capacity -1 WHERE bus_id = $1",[busid])
   await pool.query("UPDATE Users SET bus_id = $1 WHERE user_id=$2",[busid, studentid])
-  const price = await pool.query("SELECT price FROM Bus b INNER JOIN Route r ON b.route_id = r.route_id WHERE bus_id = $1",[busid])
-  await pool.query("UPDATE Users SET balance = balance - $1 WHERE user_id = $2",[price,studentid])
+
+  const { rows: priceRows } = await pool.query("SELECT price FROM Route WHERE route_id = $1", [routeid]);
+  const price = priceRows[0]?.price;
+
+  console.log("price:",price);
+  console.log("bus id:", busid);
+  await pool.query("UPDATE Users SET balance = balance - $1 WHERE user_id = $2",[price ,studentid])
   
 }
-//delete a user
-async function deleteUser(user_id) {
-  await pool.query("DELETE FROM Users WHERE user_id = $1", [user_id]);
+
+//delete row
+async function deleteRow(tableName, id, given_id) {
+  await pool.query(`DELETE FROM ${tableName} WHERE ${id} = $1`, [given_id]);
 }
-//delete a driver
-async function deleteDriver(driver_id) {
-  await pool.query("DELETE FROM Driver WHERE driver_id = $1", [driver_id]);
-}
-//delete a conductor
-async function deleteConductor(conductor_id) {
-  await pool.query("DELETE FROM Conductor WHERE conductor_id = $1", [conductor_id]);
-}
+
 //get driver_id and conductor_id of a bus
 async function getDriverAndConductor(bus_id) {
   const { rows } = await pool.query("SELECT driver_id, conductor_id FROM Bus WHERE bus_id = $1", [bus_id]);
@@ -77,14 +80,7 @@ async function addNewRoute(routeid, routename, price){
 async function addNewBus(busid, capacity, driverid, conductorid, routeid){
   await pool.query("INSERT INTO Bus (bus_id, capacity, driver_id, conductor_id, route_id) VALUES ($1, $2, $3, $4, $5)",[busid,capacity,driverid,conductorid,routeid]);
 }
-//delete a bus
-async function deleteBus(bus_id) {
-  await pool.query("DELETE FROM Bus WHERE bus_id = $1", [bus_id]);
-}
-//delete a route
-async function deleteRoute(route_id) {
-  await pool.query("DELETE FROM Route WHERE route_id = $1", [route_id]);
-}
+
 //get all buses and routes
 async function getAllBusAndRoutes() {
   const { rows } = await pool.query(
@@ -93,40 +89,22 @@ async function getAllBusAndRoutes() {
   return rows;
 }
 
-async function getAllBuses() {
- const { rows } = await pool.query("SELECT * FROM Bus");
- return rows;
+
+//get all stuff
+async function getAllStuff(tableName) {
+  const { rows } = await pool.query(`SELECT * FROM ${tableName}`);
+  return rows;
 }
 
-//get all drivers
-async function getAllDrivers() {
- const { rows } = await pool.query("SELECT * FROM Driver");
- return rows;
+//get all id from table
+async function getAllIdFromTable(id, tableName) {
+  const { rows } = await pool.query(`SELECT ${id} FROM ${tableName}`);
+  return rows;
 }
 
-//get all conductors
-async function getAllConductors() {
- const { rows } = await pool.query("SELECT * FROM Conductor");
- return rows;
-}
-
-//get all routes
-async function getAllRoutes() {
- const { rows } = await pool.query("SELECT * FROM Route");
- return rows;
-}
-
-//get all ratings
-async function getAllRatings() {
- const { rows } = await pool.query("SELECT * FROM Ratings");
- return rows;
-}
-
-//get all users
-async function getAllUsers() {
- const { rows } = await pool.query("SELECT * FROM Users");
- return rows;
-
+//update column value of row in given table
+async function updateColumnValueOfTable(tableName, columnName, newValue, idColumn, idValue) {
+  await pool.query(`UPDATE ${tableName} SET ${columnName} = $1 WHERE ${idColumn} = $2`, [newValue, idValue]);
 }
 
 
@@ -141,21 +119,14 @@ module.exports = {
     updateDriver,
     updateConductor,
     userBoardsBus,
-    deleteUser,
-    deleteDriver,
-    deleteConductor,
+    deleteRow,
     getDriverAndConductor,
     addRating,
     addNewRoute,
     addNewBus,
-    deleteBus,
-    deleteRoute,
     getAllBusAndRoutes,
-    getAllBuses,
-    getAllDrivers,
-    getAllConductors,
-    getAllRoutes,
-    getAllRatings,
-    getAllUsers,
+    getAllStuff,
+    getAllIdFromTable,
+    updateColumnValueOfTable
    
 }

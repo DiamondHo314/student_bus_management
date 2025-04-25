@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <title>Home</title>
 </head>
 <body>
     <body>
         <audio id="button-sound" src="/button_click.mp3" preload="auto"></audio>
         <div class="container mt-2">
-            <h1 class="mb-2">WELCOME BACK <%= user.name %></h1>
+            <h1 class="mb-2">WELCOME BACK, <%= user.name %>!</h1>
             <h2>Your last ride</h2>
             <% if (busRouteName != undefined) { %>
                 <% console.log('bus route name: ', busRouteName.route_name) %>
@@ -19,10 +21,22 @@
                 <p>You did not take any bus yet!</p> 
             <% } %> 
             <br>
-            <h3> your balance: <%= user.balance %></h3> 
+            <h3> your balance: <%= user.balance %>tk</h3> 
             <button type="button" class="btn btn-primary" onclick="updateBalance()">Add balance</button>
             <br>
-            <a href="/ratings" class="btn btn-success mt-3">Rate Staff</a>
+            <div class="btn-group mt-3">
+                <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" >
+                    Buy ticket and board a bus
+                </button>
+                <div class="dropdown-menu">
+                    <% busRoutes.forEach(route => { %>
+                        <a class="dropdown-item" href="/buy-ticket/<%= route.route_id %>/<%= route.price %>/<%= user.user_id %>"><%= route.route_name %>; price: <%= route.price %>tk</a>
+                    <% }) %>
+                </div>
+
+            </div>
+            <br>
+            <a href="/ratings" class="btn btn-success mt-3">Rate Staff</a> <br>
             <a href="/log-in/log-out" class="btn btn-danger mt-3">LOG OUT</a>
         </div>
 

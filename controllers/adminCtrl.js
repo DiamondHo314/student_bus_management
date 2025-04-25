@@ -9,7 +9,7 @@ const getAdminView = (req, res) => {
 function getColNames(obj){
     const colNames = []
     Object.keys(obj).forEach((key) => {
-        if (key !== "password") {
+        if (key !== "password" & key !== "balance") {
             colNames.push(key);
         } 
     } )
@@ -20,16 +20,21 @@ function getColNames(obj){
 //basically dbfunction is the query function that we are passing in for example db.getAllBuses
 //here, the query function is first being passed in here as an object, yes a function as an object
 //then we are calling it in the function with the () operator
+//NAH ITS EVEN BETTER NOW, we just pass in table name for example "Bus"
+//then we can just call db.getAllStuff(tableName) and it will call the function
 //and title is the name of the table we are passing in for example "Buses"
-async function renderEntityDetails(req, res, dbFunction, title) {
+async function renderEntityDetails(req, res, title, tableName, pk) {
     try {
-        const data = await dbFunction(); 
-        //this () simply calls the function that we passed in as object at first
-        //because db.getAllBuses won't call the function, but db.getAllBuses() will
+        const data = await db.getAllStuff(tableName); 
+        const idsOfTablesObjs = await db.getAllIdFromTable(pk, tableName); //gets all pk from table, but as object at first
+        const idsOfTables = idsOfTablesObjs.map(obj => obj[pk]); // then extract the IDs from the objects
+       
         res.render("entityDetails", {
             title: title,
             rowVals: data,
             colNames: getColNames(data[0]), 
+            primaryKeys: idsOfTables,
+            tableName: tableName,
         });
     } catch (error) {
         console.error(`Error fetching ${title.toLowerCase()}:`, error);
@@ -37,12 +42,27 @@ async function renderEntityDetails(req, res, dbFunction, title) {
     }
 }
 
-const getAllBuses = (req, res) => renderEntityDetails(req, res, db.getAllBuses, "Buses");
-const getAllConductors = (req, res) => renderEntityDetails(req, res, db.getAllConductors, "Conductors");
-const getAllDrivers = (req, res) => renderEntityDetails(req, res, db.getAllDrivers, "Drivers");
-const getAllRoutes = (req, res) => renderEntityDetails(req, res, db.getAllRoutes, "Routes");
-const getAllRatings = (req, res) => renderEntityDetails(req, res, db.getAllRatings, "Ratings");
-const getAllUsers = (req, res) => renderEntityDetails(req, res, db.getAllUsers, "Users");
+const getAllBuses = (req, res) => renderEntityDetails(req, res,  "Buses", "Bus", 'bus_id');
+const getAllConductors = (req, res) => renderEntityDetails(req, res,  "Conductors", "Conductor", "conductor_id");
+const getAllDrivers = (req, res) => renderEntityDetails(req, res, "Drivers", "Driver", "driver_id");
+const getAllRoutes = (req, res) => renderEntityDetails(req, res,  "Routes", "Route", "route_id");
+const getAllRatings = (req, res) => renderEntityDetails(req, res, "Ratings", "Ratings", "rating_id");
+const getAllUsers = (req, res) => renderEntityDetails(req, res,  "Users", "Users", "user_id");
+
+//handling delete requests
+async function adminDeleteRow(req, res) {
+    const tableName = req.params.tableName;
+    const given_id = req.params.primaryKeys;
+    const id = tableName === "Users" ? "user_id" : tableName === "Ratings" ? "rating_id" : tableName === "Bus" ? "bus_id" : tableName === "Driver" ? "driver_id" : tableName === "Conductor" ? "conductor_id" : tableName === "Route" ? "route_id" : null;
+
+    try {
+        await db.deleteRow(tableName, id, given_id);
+        res.redirect(`/admin/${tableName}`);
+    } catch (error) {
+        console.error(`Error deleting ${tableName}:`, error);
+        res.status(500).send("Internal server error");
+    }
+}
 
 
 module.exports = {
@@ -53,4 +73,5 @@ module.exports = {
     getAllConductors,
     getAllRoutes,
     getAllUsers,
+    adminDeleteRow
 }

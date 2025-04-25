@@ -30,11 +30,48 @@ async function updateBalance(req, res) {
 }
 
 async function getUserView(req, res) {
-  const userInfo = req.user  
-  const users_bus_route = await db.getUsersBusRoute(userInfo.user_id)
-  //const usr_balance = await db.getUserBalance(userInfo.user_id)
-  // no need for the above line, we can just do user.balance in index.ejs to get the users balance
-  res.render("index", { user: req.user, busRouteName: users_bus_route}) //user_balance: usr_balance });
+  try {
+    const userInfo = req.user  
+    const users_bus_route = await db.getUsersBusRoute(userInfo.user_id)
+    const busRoutes = await db.getAllRoutes(); // Fetch all bus routes
+    //const usr_balance = await db.getUserBalance(userInfo.user_id)
+    // no need for the above line, we can just do user.balance in index.ejs to get the users balance
+    res.render("index", {
+      user: req.user, 
+      busRouteName: users_bus_route,
+      busRoutes: busRoutes
+    }) //user_balance: usr_balance });
+    
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+    res.status(500).send("Internal server error");
+  }
+}
+
+//user boards the bus function
+async function userBoardsBus(req, res) {
+  try {
+    const userId = parseInt(req.params.user_id); 
+    const routeId = req.params.route_id; 
+    const routePrice = parseFloat(req.params.price);
+
+    console.log('params: ', req.params);
+    
+    const getUserBalance = await db.getUserBalance(userId)
+    const userBalance = parseFloat(getUserBalance.balance); // Fetch user balance
+    console.log('user balance:', userBalance);
+
+    if (userBalance - routePrice < 0) {
+      console.log('Insufficient balance'); // Log the error
+      return res.status(400).send('<script>alert("Insufficient balance, add balance and try again"); window.location.href="/";</script>');
+    }
+
+      await db.userBoardsBus(userId, routeId) 
+      res.redirect('/'); // Redirect to the user view after boarding the bus
+  } catch (error) {
+    console.error('Error boarding bus:', error);
+    res.status(500).send('Internal server error');
+  }
 }
 
 async function getRatingView(req, res) {
@@ -50,5 +87,6 @@ module.exports = {
   getUserView,
   ensureAuthenticated,
   updateBalance,
-  getRatingView
+  getRatingView,
+  userBoardsBus
 }

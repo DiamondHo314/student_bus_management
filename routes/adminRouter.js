@@ -10,4 +10,7 @@ adminRouter.get('/conductors', adminController.getAllConductors)
 adminRouter.get('/routes', adminController.getAllRoutes)
 adminRouter.get('/users', adminController.getAllUsers)
 
+//delete requests
+adminRouter.get('/delete/:tableName/:primaryKeys', adminController.adminDeleteRow)
+
 module.exports = adminRouter;
