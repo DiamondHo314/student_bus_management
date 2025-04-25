@@ -9,9 +9,9 @@
         .moving-buses {
             position: relative;
             width: 200%;
-            height: 150px; /* Adjust height as needed */
+            height: 60px; /* Adjust height as needed */
             overflow: hidden;
-            /*background-color: #f8f9fa; /* Optional: Add a background color */
+            background-color: #002147;
         }
 
         .bus-icon {
@@ -21,55 +21,70 @@
         }
 
         .bus-icon:nth-child(1) {
-            animation-delay: 1s; 
+            animation-delay: 0s; 
         }
 
         .bus-icon:nth-child(2) {
-            animation-delay: 3s; 
+            animation-delay: 2.08s; 
         }
 
         .bus-icon:nth-child(3) {
-            animation-delay: 5s; 
+            animation-delay: 4.16s; 
         }
+
         .bus-icon:nth-child(4) {
-            animation-delay: 7s; 
+            animation-delay: 6.24s; 
         }
+
         .bus-icon:nth-child(5) {
-            animation-delay: 9s; 
+            animation-delay: 8.32s; 
         }
+
         .bus-icon:nth-child(6) {
-            animation-delay: 11s; 
+            animation-delay: 10.4s; 
         }
+
         .bus-icon:nth-child(7) {
-            animation-delay: 13s; 
+            animation-delay: 12.48s; 
         }
+
         .bus-icon:nth-child(8) {
-            animation-delay: 15s; 
+            animation-delay: 14.56s; 
         }
+
         .bus-icon:nth-child(9) {
-            animation-delay: 17s; 
+            animation-delay: 16.64s; 
         }
+
         .bus-icon:nth-child(10) {
-            animation-delay: 19s; 
+            animation-delay: 18.72s; 
         }
+
         .bus-icon:nth-child(11) {
-            animation-delay: 21s; 
+            animation-delay: 20.8s; 
         }
+
         .bus-icon:nth-child(12) {
-            animation-delay: 23s; 
+            animation-delay: 22.88s; 
         }
+
         @keyframes moveBus {
             0% {
-                left: -60px; /* Start off-screen to the left */
+                left: -120px; /* Start off-screen to the left */
             }
             100% {
                 left: 100%; /* Move off-screen to the right */
             }
         }
+
+        body {
+            background-color:#A9A9A9 ; /* Light blue background color */
+        }
+         
     </style>
 </head>
 <body>
-    <!-- Moving buses at the top -->
+
     <div class="moving-buses">
         <img src="/bus.png" alt="Bus" class="bus-icon">
         <img src="/bus.png" alt="Bus" class="bus-icon">
@@ -86,8 +101,8 @@
         
     </div>
 
-    <!-- Main content -->
-    <div class="d-flex flex-column align-items-center vh-100 justify-content-center">
+   
+    <div class="d-flex flex-column align-items-center vh-100 justify-content-start" style="padding-top: 50px;">
         <h1 class="text-center mb-4">Please Log In</h1>
         <div class="card p-4" style="width: 400px;">
             <form action="/log-in" method="POST">
@@ -128,7 +143,7 @@
                         event.preventDefault(); // Prevent immediate navigation
                         setTimeout(() => {
                             window.location.href = href; // Navigate after the sound plays
-                        }, 300); // Delay navigation by 300ms (adjust as needed)
+                        }, 300); // Delay navigation to allow sound to play
                     }
                 });
             });
