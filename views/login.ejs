@@ -8,16 +8,17 @@
     <style>
         .moving-buses {
             position: relative;
-            width: 200%;
-            height: 60px; /* Adjust height as needed */
+            width: 100%;
+            height: 60px; 
             overflow: hidden;
             background-color: #002147;
         }
 
         .bus-icon {
             position: absolute;
-            width: 100px; /* Adjust the size of the bus */
-            animation: moveBus 25s linear infinite; /* Animation duration and infinite loop */
+            width: 100px; 
+            animation: moveBus 15s linear infinite; 
+            opacity: 1; 
         }
 
         .bus-icon:nth-child(1) {
@@ -25,62 +26,37 @@
         }
 
         .bus-icon:nth-child(2) {
-            animation-delay: 2.08s; 
+            animation-delay: 2.5s; 
         }
 
         .bus-icon:nth-child(3) {
-            animation-delay: 4.16s; 
+            animation-delay: 5s; 
         }
 
         .bus-icon:nth-child(4) {
-            animation-delay: 6.24s; 
+            animation-delay: 7.5s; 
         }
 
         .bus-icon:nth-child(5) {
-            animation-delay: 8.32s; 
+            animation-delay: 10s; 
         }
 
         .bus-icon:nth-child(6) {
-            animation-delay: 10.4s; 
-        }
-
-        .bus-icon:nth-child(7) {
-            animation-delay: 12.48s; 
-        }
-
-        .bus-icon:nth-child(8) {
-            animation-delay: 14.56s; 
-        }
-
-        .bus-icon:nth-child(9) {
-            animation-delay: 16.64s; 
-        }
-
-        .bus-icon:nth-child(10) {
-            animation-delay: 18.72s; 
-        }
-
-        .bus-icon:nth-child(11) {
-            animation-delay: 20.8s; 
-        }
-
-        .bus-icon:nth-child(12) {
-            animation-delay: 22.88s; 
+            animation-delay: 12.5s; 
         }
 
         @keyframes moveBus {
             0% {
-                left: -120px; /* Start off-screen to the left */
+                left: 100%; /* Start off-screen to the right */
             }
             100% {
-                left: 100%; /* Move off-screen to the right */
+                left: -120px; /* Move off-screen to the left */
             }
         }
 
         body {
-            background-color:#A9A9A9 ; /* Light blue background color */
+            background-color: #A9A9A9; 
         }
-         
     </style>
 </head>
 <body>
@@ -92,16 +68,8 @@
         <img src="/bus.png" alt="Bus" class="bus-icon">
         <img src="/bus.png" alt="Bus" class="bus-icon">
         <img src="/bus.png" alt="Bus" class="bus-icon">
-        <img src="/bus.png" alt="Bus" class="bus-icon">
-        <img src="/bus.png" alt="Bus" class="bus-icon">
-        <img src="/bus.png" alt="Bus" class="bus-icon">
-        <img src="/bus.png" alt="Bus" class="bus-icon">
-        <img src="/bus.png" alt="Bus" class="bus-icon">
-        <img src="/bus.png" alt="Bus" class="bus-icon">
-        
     </div>
 
-   
     <div class="d-flex flex-column align-items-center vh-100 justify-content-start" style="padding-top: 50px;">
         <h1 class="text-center mb-4">Please Log In</h1>
         <div class="card p-4" style="width: 400px;">
