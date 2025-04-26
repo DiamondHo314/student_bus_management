@@ -1,4 +1,3 @@
-const { get } = require('../routes/indexRouter');
 const pool = require('./pool'); 
 
 async function getUserByUsername(username) {
@@ -58,10 +57,6 @@ async function userBoardsBus(studentid, routeid) {
   
 }
 
-//delete row
-async function deleteRow(tableName, id, given_id) {
-  await pool.query(`DELETE FROM ${tableName} WHERE ${id} = $1`, [given_id]);
-}
 
 //get driver_id and conductor_id of a bus
 async function getDriverAndConductor(bus_id) {
@@ -105,6 +100,28 @@ async function getAllIdFromTable(id, tableName) {
 //update column value of row in given table
 async function updateColumnValueOfTable(tableName, columnName, newValue, idColumn, idValue) {
   await pool.query(`UPDATE ${tableName} SET ${columnName} = $1 WHERE ${idColumn} = $2`, [newValue, idValue]);
+}
+
+//to handle deleting a bus
+async function deleteBus(bus_id) {
+  await pool.query("UPDATE Users SET bus_id = NULL WHERE bus_id = $1", [bus_id]); 
+  await pool.query("DELETE FROM Bus WHERE bus_id = $1", [bus_id]);
+}
+
+//to handle deleting a route
+async function deleteRoute(route_id) {
+  await pool.query("UPDATE Bus SET route_id = NULL WHERE route_id = $1", [route_id]); 
+  await pool.query("DELETE FROM Route WHERE route_id = $1", [route_id]);
+}
+
+//delete row
+async function deleteRow(tableName, id, given_id) {
+  await pool.query(`DELETE FROM ${tableName} WHERE ${id} = $1`, [given_id]);
+  if (tableName === "Bus") {
+    await deleteBus(given_id);
+  } else if (tableName === "Route") {
+    await deleteRoute(given_id);
+  }
 }
 
 

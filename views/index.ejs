@@ -11,18 +11,20 @@
 <body>
     <body>
         <audio id="button-sound" src="/button_click.mp3" preload="auto"></audio>
+            <div class="jumbotron text-center">
+                <h1 class="mb-2">Welcome back, <%= user.name %>!</h1>
+            </div>
         <div class="container mt-2">
-            <h1 class="mb-2">WELCOME BACK, <%= user.name %>!</h1>
             <h2>Your last ride</h2>
             <% if (busRouteName != undefined) { %>
                 <% console.log('bus route name: ', busRouteName.route_name) %>
-                <p>You took <%= busRouteName.route_name %> today</p> 
+                <p>You last took <%= busRouteName.route_name %></p> 
             <% } else { %>
                 <p>You did not take any bus yet!</p> 
             <% } %> 
             <br>
             <h3> your balance: <%= user.balance %>tk</h3> 
-            <button type="button" class="btn btn-primary" onclick="updateBalance()">Add balance</button>
+            <button type="button" class="btn btn-primary mt-2" onclick="updateBalance()">Add balance</button>
             <br>
             <div class="btn-group mt-3">
                 <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" >

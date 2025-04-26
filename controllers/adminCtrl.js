@@ -64,6 +64,27 @@ async function adminDeleteRow(req, res) {
     }
 }
 
+async function updateTableValue(req, res) {
+    const tableName = req.params.tableName;
+    const columnName = req.params.col;
+    const idColumn = tableName === "Users" ? "user_id" : tableName === "Ratings" ? "rating_id" : tableName === "Bus" ? "bus_id" : tableName === "Driver" ? "driver_id" : tableName === "Conductor" ? "conductor_id" : tableName === "Route" ? "route_id" : null;
+    const idValue = req.params.primaryKeys;
+
+    const newValue = req.query.newValue; // Assuming the new value is passed as a query parameter
+
+    console.log('newValue:', newValue);
+    console.log('req.params:', req.params);
+
+    try {
+        await db.updateColumnValueOfTable(tableName, columnName, newValue, idColumn, idValue);
+        res.redirect(`/admin/${tableName}`);
+    } catch (error) {
+        console.error(`Error updating ${tableName}:`, error);
+        res.status(500).send("Internal server error");
+    }
+    
+}
+
 
 module.exports = {
     getAdminView,
@@ -73,5 +94,6 @@ module.exports = {
     getAllConductors,
     getAllRoutes,
     getAllUsers,
-    adminDeleteRow
+    adminDeleteRow,
+    updateTableValue
 }

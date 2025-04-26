@@ -3,14 +3,18 @@ const adminRouter = express.Router();
 const adminController = require('../controllers/adminCtrl');
  
 adminRouter.get('/', adminController.getAdminView)
-adminRouter.get('/buses', adminController.getAllBuses)
-adminRouter.get('/ratings', adminController.getAllRatings)
-adminRouter.get('/drivers', adminController.getAllDrivers)
-adminRouter.get('/conductors', adminController.getAllConductors)
-adminRouter.get('/routes', adminController.getAllRoutes)
-adminRouter.get('/users', adminController.getAllUsers)
+adminRouter.get('/Bus', adminController.getAllBuses)
+adminRouter.get('/Ratings', adminController.getAllRatings)
+adminRouter.get('/Driver', adminController.getAllDrivers)
+adminRouter.get('/Conductor', adminController.getAllConductors)
+adminRouter.get('/Route', adminController.getAllRoutes)
+adminRouter.get('/Users', adminController.getAllUsers)
 
 //delete requests
 adminRouter.get('/delete/:tableName/:primaryKeys', adminController.adminDeleteRow)
+
+//update requests
+adminRouter.get('/:tableName/edit/:col/:primaryKeys?newValue', adminController.updateTableValue)
+adminRouter.get('/:tableName/edit/:col/:primaryKeys', adminController.updateTableValue)
 
 module.exports = adminRouter;

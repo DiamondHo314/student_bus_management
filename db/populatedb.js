@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS Bus (
     capacity INTEGER,
     driver_id VARCHAR(20) REFERENCES Driver(driver_id),
     conductor_id VARCHAR(20) REFERENCES Conductor(conductor_id),
-    route_id VARCHAR(20) REFERENCES Route(route_id)
+    route_id VARCHAR(20) REFERENCES Route(route_id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Users (
@@ -50,6 +50,8 @@ CREATE TABLE IF NOT EXISTS Ratings (
     driver_rating INTEGER CHECK (driver_rating BETWEEN 1 AND 5),
     conductor_rating INTEGER CHECK (conductor_rating BETWEEN 1 AND 5)
 );
+
+ALTER TABLE Users ADD CONSTRAINT fk_bus FOREIGN KEY (bus_id) REFERENCES Bus (bus_id) ON DELETE SET NULL;
 
 -- Populate Route Table
 INSERT INTO Route (route_id, route_name, price) VALUES
