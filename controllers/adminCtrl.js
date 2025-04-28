@@ -85,6 +85,34 @@ async function updateTableValue(req, res) {
     
 }
 
+//get add staff page
+const getAddStaff = (req, res) =>{
+    try {
+        const tablename = req.params.tableName
+        console.log('req params of getaddstaff:', req.params)
+        res.render('addStaff', {tableName : tablename})
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//add new staff
+async function addNewStaff(req, res){
+    try {
+        const tablename = req.params.tableName
+        const { name, id, phone } = req.body
+        if (tablename == 'Driver'){
+            await db.addNewDriver(id, phone, name)
+        } else if (tablename == 'Conductor') {
+            await db.addNewConductor(id, phone, name)
+        }
+
+        res.redirect(`/admin/${tablename}`)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 module.exports = {
     getAdminView,
@@ -95,5 +123,8 @@ module.exports = {
     getAllRoutes,
     getAllUsers,
     adminDeleteRow,
-    updateTableValue
+    updateTableValue, 
+    addNewStaff,
+    getAddStaff,
+
 }

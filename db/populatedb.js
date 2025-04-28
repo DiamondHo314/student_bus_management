@@ -53,6 +53,17 @@ CREATE TABLE IF NOT EXISTS Ratings (
 
 ALTER TABLE Users ADD CONSTRAINT fk_bus FOREIGN KEY (bus_id) REFERENCES Bus (bus_id) ON DELETE SET NULL;
 
+ALTER TABLE Bus ADD CONSTRAINT fk_driver FOREIGN KEY (driver_id) REFERENCES Driver(driver_id) ON DELETE SET NULL;
+
+ALTER TABLE Bus ADD CONSTRAINT fk_conductor FOREIGN KEY (conductor_id) REFERENCES Conductor(con
+ductor_id) ON DELETE SET NULL;
+
+ALTER TABLE Ratings ADD CONSTRAINT fk_driver_rating FOREIGN KEY (driver_id) REFERENCES Driver(d
+river_id) ON DELETE CASCADE;
+
+ ALTER TABLE Ratings ADD CONSTRAINT fk_conductor_rating FOREIGN KEY (conductor_id) REFERENCES Co
+nductor(conductor_id) ON DELETE CASCADE;
+
 -- Populate Route Table
 INSERT INTO Route (route_id, route_name, price) VALUES
 ('route01', 'Mohammadpur A', 100.00),

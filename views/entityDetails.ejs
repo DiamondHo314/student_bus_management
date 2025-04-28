@@ -50,6 +50,9 @@
             </tbody>
         </table>
     </div>
+    <% if (tableName == 'Driver' || tableName == 'Conductor'){ %>
+        <a class="mx-2 text-decoration-none" href="/admin/<%= tableName %>/addNew">Add new <%= tableName %></a>
+    <% } %>
     <br>
     <footer class="bg-light text-center py-3 mt-4">
         <a href="/admin" class="mx-2 text-decoration-none">Back to Dashboard</a>
