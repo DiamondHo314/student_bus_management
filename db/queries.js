@@ -64,8 +64,8 @@ async function getDriverAndConductor(bus_id) {
   return rows[0];
 }
 //add rating given by a user (Rating deyar shomoy driver_id r conductor_id auto filled-up hobe? uporer query ta diye?)
-async function addRating(username, driver_id, conductor_id, driver_rating, conductor_rating) {
-  await pool.query("INSERT INTO Ratings (username, driver_id, conductor_id, driver_rating, conductor_rating) VALUES ($1, $2, $3, $4, $5)", [username, driver_id, conductor_id, driver_rating, conductor_rating]);
+async function addRating(username, driver_id, conductor_id, driver_rating, conductor_rating,comment) {
+  await pool.query("INSERT INTO Ratings (username, driver_id, conductor_id, driver_rating, conductor_rating,comment) VALUES ($1, $2, $3, $4, $5,$6)", [username, driver_id, conductor_id, driver_rating, conductor_rating, comment]);
 }
 //add new Route
 async function addNewRoute(routeid, routename, price){

@@ -17,7 +17,7 @@ adminRouter.post('/:tableName/addNew', adminController.addNewStaff)
 adminRouter.get('/delete/:tableName/:primaryKeys', adminController.adminDeleteRow)
 
 //update requests
-adminRouter.get('/:tableName/edit/:col/:primaryKeys?newValue', adminController.updateTableValue)
+adminRouter.get('/:tableName/edit/:col/:primaryKeys/:newValue', adminController.updateTableValue)
 adminRouter.get('/:tableName/edit/:col/:primaryKeys', adminController.updateTableValue)
 
 module.exports = adminRouter;

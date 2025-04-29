@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <title>Rate Staff</title>
     <style>
+        body {
+            background-color:#B0C4DE
+        }
         .star-rating {
             display: flex;
             flex-direction: row-reverse;
@@ -71,6 +74,11 @@
                     <input type="radio" id="conductor-star-1" name="conductor_rating" value="1">
                     <label for="conductor-star-1">&#9733;</label>
                 </div>
+            </div>
+            <!--comment box-->
+            <div class="form-group">
+                <label for="comment">Additional Comments (Optional)</label>
+                <textarea id="comment" name="comment" class="form-control" rows="4" placeholder="Write your comments here..."></textarea>
             </div>
             <button type="submit" class="btn btn-primary mt-3">Submit</button>
         </form>
