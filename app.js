@@ -27,6 +27,11 @@ app.get('/thankyou', (req, res) => {
     res.render('thankyou');
 });
 
+// Handle undefined routes (404)
+app.use((req, res) => {
+    res.status(404).render('404'); // Render the 404.ejs page
+});
+
 app.listen(8080, () => {
     console.log('Server is running on port 8080');
 }

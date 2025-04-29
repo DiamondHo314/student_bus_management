@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <title>Page Not Found</title>
+    <style>
+        body {
+            background-image: url('/404_image.png');
+            background-size: 45% auto;
+            background-color: #B0C4DE; 
+            background-position: center 95%;
+            background-repeat: no-repeat; /* Prevent the image from repeating */
+            color: maroon;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align items to the top */
+            height: 100vh;
+            margin: 0;
+            padding-top: 50px; /* Add padding to move content down slightly */
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background to the content */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .btn {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <audio id="button-sound" src="/button_click.mp3" preload="auto"></audio>
+    <div class="container">
+        <h1>404 - Page Not Found</h1>
+        <p>Why are you here? Why are you not logged in? What have you done?</p>
+        <a href="/" class="btn btn-primary">Go to Home</a>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttonSound = document.getElementById('button-sound');
+            const buttons = document.querySelectorAll('button, a.btn'); // Include <a> tags with the "btn" class
+
+            buttons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const href = button.getAttribute('href'); // Get the href attribute for links
+                    const isLink = button.tagName === 'A' && href; // Check if it's a link
+
+                    buttonSound.currentTime = 0; // Reset the sound to the beginning
+                    buttonSound.play(); // Play the sound
+
+                    if (isLink) {
+                        event.preventDefault(); // Prevent immediate navigation
+                        setTimeout(() => {
+                            window.location.href = href; // Navigate after the sound plays
+                        }, 300); // Delay navigation by 300ms (adjust as needed)
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
