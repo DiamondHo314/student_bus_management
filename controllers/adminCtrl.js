@@ -69,11 +69,23 @@ async function updateTableValue(req, res) {
     const columnName = req.params.col;
     const idColumn = tableName === "Users" ? "user_id" : tableName === "Ratings" ? "rating_id" : tableName === "Bus" ? "bus_id" : tableName === "Driver" ? "driver_id" : tableName === "Conductor" ? "conductor_id" : tableName === "Route" ? "route_id" : null;
     const idValue = req.params.primaryKeys;
-
     const newValue = req.query.newValue; // Assuming the new value is passed as a query parameter
 
+    const extractedTableName = columnName.split("_")[0]; // Extract the table name from the column name
+    const result = await db.getAllStuffById(extractedTableName, columnName, newValue)
+    // why did this take me so long
+
     console.log('newValue:', newValue);
-    console.log('req.params:', req.params);
+    console.log('columnName:', columnName);
+    console.log('extractedTableName:', extractedTableName);
+    console.log('values exist in table or not:', result);
+
+    if(result.length != 1){
+        console.log('id not found in table:', extractedTableName);
+        return res.status(400).send('<script>alert("ID does not exist"); window.location.href="/admin";</script>');
+    }
+    //console.log('req query:', req.query);
+    //console.log('req.params:', req.params);
 
     try {
         await db.updateColumnValueOfTable(tableName, columnName, newValue, idColumn, idValue);

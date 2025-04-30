@@ -124,6 +124,11 @@ async function deleteRow(tableName, id, given_id) {
   }
 }
 
+async function getAllStuffById(tableName, idColumn, id) {
+  const { rows } = await pool.query(`SELECT * FROM ${tableName} WHERE ${idColumn} = $1`, [id]);
+  return rows;
+}
+
 
 module.exports = {
     getUserByUsername,
@@ -144,6 +149,6 @@ module.exports = {
     getAllBusAndRoutes,
     getAllStuff,
     getAllIdFromTable,
-    updateColumnValueOfTable
-   
+    updateColumnValueOfTable,
+    getAllStuffById
 }

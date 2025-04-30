@@ -35,7 +35,7 @@
                                     <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown">Edit</button>
                                     <div class="dropdown-menu">
                                         <% colNames.forEach(col => { %>
-                                            <a class="dropdown-item" onclick="promptForUpdate(tableName, col, primaryKeys[i])" href="/admin/<%= tableName %>/edit/<%= col %>/<%= primaryKeys[i] %>">
+                                            <a class="dropdown-item" onclick="promptForUpdate('<%= tableName %>', '<%= col %>', '<%= primaryKeys[i] %>')" href='javascript:void(0)'>
                                                 <%= col %>
                                             </a>
                                         <% }) %>
@@ -59,10 +59,10 @@
     </footer>
     <script>
         function promptForUpdate(tableName, columnName, primaryKey) {
-            const newValue = prompt(`Enter new value for ${col}:`);
+            const newValue = prompt(`Enter new value for ${columnName}:`);
             if (newValue !== null && newValue.trim() !== "") {
-                // Redirect to the update route with the new value as a query parameter
-                window.location.href = `/admin/${tableName}/edit/${columnName}/${primaryKey}?newValue=${encodeURIComponent(newValue)}`;
+                const url = `/admin/${tableName}/edit/${columnName}/${primaryKey}?newValue=${encodeURIComponent(newValue)}`;
+                window.location.href = url;
             } else {
                 alert("Update canceled or invalid input.");
             }
