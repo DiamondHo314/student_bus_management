@@ -10,8 +10,8 @@ adminRouter.get('/Conductor', adminController.getAllConductors)
 adminRouter.get('/Route', adminController.getAllRoutes)
 adminRouter.get('/Users', adminController.getAllUsers)
 
-adminRouter.get('/:tableName/addNew', adminController.getAddStaff)
-adminRouter.post('/:tableName/addNew', adminController.addNewStaff)
+adminRouter.get('/:tableName/addNew', adminController.getAddNew)
+adminRouter.post('/:tableName/addNew', adminController.addNew)
 
 //delete requests
 adminRouter.get('/delete/:tableName/:primaryKeys', adminController.adminDeleteRow)

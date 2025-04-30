@@ -50,7 +50,7 @@
             </tbody>
         </table>
     </div>
-    <% if (tableName == 'Driver' || tableName == 'Conductor'){ %>
+    <% if (tableName != 'Users' & tableName != 'Ratings'){ %>
         <a class="mx-2 text-decoration-none" href="/admin/<%= tableName %>/addNew">Add new <%= tableName %></a>
     <% } %>
     <br>

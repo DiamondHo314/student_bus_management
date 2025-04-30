@@ -98,26 +98,34 @@ async function updateTableValue(req, res) {
 }
 
 //get add staff page
-const getAddStaff = (req, res) =>{
+async function getAddNew(req, res) {
     try {
         const tablename = req.params.tableName
+        const data = await db.getAllStuff(tablename)
+        const colnames = getColNames(data[0])
+        console.log('column anames:', colnames)
+        console.log('testing query string:', colnames.join(', '))
+
         console.log('req params of getaddstaff:', req.params)
-        res.render('addStaff', {tableName : tablename})
+        res.render('addNew', {
+            tableName : tablename,
+            colNames : colnames,
+        })
     } catch (error) {
         console.log(error)
     }
 }
 
 //add new staff
-async function addNewStaff(req, res){
+async function addNew(req, res){
     try {
         const tablename = req.params.tableName
-        const { name, id, phone } = req.body
-        if (tablename == 'Driver'){
-            await db.addNewDriver(id, phone, name)
-        } else if (tablename == 'Conductor') {
-            await db.addNewConductor(id, phone, name)
-        }
+        console.log('req body of addnew:', req.body)
+        const values = Object.values(req.body)
+        console.log('values:', values)
+        const colnames = Object.keys(req.body)
+
+        await db.insertIntoTable(tablename, colnames, values)
 
         res.redirect(`/admin/${tablename}`)
     } catch (error) {
@@ -136,7 +144,7 @@ module.exports = {
     getAllUsers,
     adminDeleteRow,
     updateTableValue, 
-    addNewStaff,
-    getAddStaff,
+    addNew,
+    getAddNew,
 
 }

@@ -24,14 +24,6 @@ async function registerNewUser(username, password, phone) {
   await pool.query("INSERT INTO Users (name, password, phone) VALUES ($1, $2, $3)", [username, password, phone]);
 }
 
-//add new driver
-async function addNewDriver(driverid, phone, name){
-  await pool.query("INSERT INTO Driver (driver_id,phone,name) VALUES ($1, $2, $3)",[driverid,phone,name]);
-}
-//add new conductor
-async function addNewConductor(id, phone, name){
-  await pool.query("INSERT INTO Conductor (conductor_id,phone,name) VALUES ($1, $2, $3)",[id,phone,name]);
-}
 //update driver of a bus
 async function updateDriver(driverid, busid){
   await pool.query("UPDATE Bus SET driver_id = $1 WHERE bus_id= $2",[driverid,busid]);
@@ -67,14 +59,6 @@ async function getDriverAndConductor(bus_id) {
 async function addRating(username, driver_id, conductor_id, driver_rating, conductor_rating,comment) {
   await pool.query("INSERT INTO Ratings (username, driver_id, conductor_id, driver_rating, conductor_rating,comment) VALUES ($1, $2, $3, $4, $5,$6)", [username, driver_id, conductor_id, driver_rating, conductor_rating, comment]);
 }
-//add new Route
-async function addNewRoute(routeid, routename, price){
-  await pool.query("INSERT INTO Route (route_id, route_name, price) VALUES ($1, $2, $3)",[routeid,routename,price]);
-}
-//add new Bus
-async function addNewBus(busid, capacity, driverid, conductorid, routeid){
-  await pool.query("INSERT INTO Bus (bus_id, capacity, driver_id, conductor_id, route_id) VALUES ($1, $2, $3, $4, $5)",[busid,capacity,driverid,conductorid,routeid]);
-}
 
 //get all buses and routes
 async function getAllBusAndRoutes() {
@@ -102,31 +86,24 @@ async function updateColumnValueOfTable(tableName, columnName, newValue, idColum
   await pool.query(`UPDATE ${tableName} SET ${columnName} = $1 WHERE ${idColumn} = $2`, [newValue, idValue]);
 }
 
-//to handle deleting a bus
-async function deleteBus(bus_id) {
-  await pool.query("UPDATE Users SET bus_id = NULL WHERE bus_id = $1", [bus_id]); 
-  await pool.query("DELETE FROM Bus WHERE bus_id = $1", [bus_id]);
-}
-
-//to handle deleting a route
-async function deleteRoute(route_id) {
-  await pool.query("UPDATE Bus SET route_id = NULL WHERE route_id = $1", [route_id]); 
-  await pool.query("DELETE FROM Route WHERE route_id = $1", [route_id]);
-}
 
 //delete row
 async function deleteRow(tableName, id, given_id) {
   await pool.query(`DELETE FROM ${tableName} WHERE ${id} = $1`, [given_id]);
-  if (tableName === "Bus") {
-    await deleteBus(given_id);
-  } else if (tableName === "Route") {
-    await deleteRoute(given_id);
-  }
 }
 
 async function getAllStuffById(tableName, idColumn, id) {
   const { rows } = await pool.query(`SELECT * FROM ${tableName} WHERE ${idColumn} = $1`, [id]);
   return rows;
+}
+
+async function insertIntoTable(tableName, columns, values) {
+  const escapeVals = () => {
+    return values.map((_, i) => `$${i + 1}`).join(", ")
+  }
+
+  const query = `INSERT INTO ${tableName} (${columns.join(", ")}) VALUES (${escapeVals()})`;
+  await pool.query(query, values);
 }
 
 
@@ -136,19 +113,16 @@ module.exports = {
     getUserBalance,
     updateUserBalance,
     registerNewUser,
-    addNewDriver,
-    addNewConductor,
     updateDriver,
     updateConductor,
     userBoardsBus,
     deleteRow,
     getDriverAndConductor,
     addRating,
-    addNewRoute,
-    addNewBus,
     getAllBusAndRoutes,
     getAllStuff,
     getAllIdFromTable,
     updateColumnValueOfTable,
-    getAllStuffById
+    getAllStuffById,
+    insertIntoTable
 }
