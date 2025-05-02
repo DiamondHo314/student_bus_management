@@ -4,10 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <title>register</title>
+    <title>Register</title>
+    <style>
+        body {
+            background-image: url('/welcome.jpg'); 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+            height: 100vh; 
+            margin: 0; 
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.6); /* Reduced opacity for more transparency */
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-     <div class="d-flex flex-column align-items-center vh-100 justify-content-start" style="padding-top: 50px;">
+    <div class="d-flex flex-column align-items-center vh-100 justify-content-start" style="padding-top: 50px;">
         <h1 class="text-center mb-4">Create New Account</h1>
         <div class="card p-4" style="width: 400px;">
             <form action="/register" method="POST">
@@ -43,14 +57,14 @@
                     const href = button.getAttribute('href'); // Get the href attribute for links
                     const isLink = button.tagName === 'A' && href; // Check if it's a link
 
-                    buttonSound.currentTime = 0; // Reset the sound to the beginning
-                    buttonSound.play(); // Play the sound
+                    buttonSound.currentTime = 0; 
+                    buttonSound.play(); 
 
                     if (isLink) {
-                        event.preventDefault(); // Prevent immediate navigation
+                        event.preventDefault(); 
                         setTimeout(() => {
-                            window.location.href = href; // Navigate after the sound plays
-                        }, 300); // Delay navigation by 300ms (adjust as needed)
+                            window.location.href = href; 
+                        }, 300); 
                     }
                 });
             });
