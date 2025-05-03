@@ -35,9 +35,11 @@
                                     <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown">Edit</button>
                                     <div class="dropdown-menu">
                                         <% colNames.forEach(col => { %>
-                                            <a class="dropdown-item" onclick="promptForUpdate('<%= tableName %>', '<%= col %>', '<%= primaryKeys[i] %>')" href='javascript:void(0)'>
-                                                <%= col %>
-                                            </a>
+                                            <% if(col !== idColumn) {%>
+                                                <a class="dropdown-item" onclick="promptForUpdate('<%= tableName %>', '<%= col %>', '<%= primaryKeys[i] %>')" href='javascript:void(0)'>
+                                                    <%= col %>
+                                                </a>
+                                            <% } %>
                                         <% }) %>
                                     </div>
                                 </div>

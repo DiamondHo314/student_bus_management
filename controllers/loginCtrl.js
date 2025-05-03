@@ -34,8 +34,31 @@ const logOut = (req, res) => {
   });
 }
 
+const getAdminLogin = (req, res) => {
+  res.render("adminLogin") 
+}
+
+function handleLoginAdmin (req, res, next) {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) {
+            return next(err);
+        }
+        if (!user || user.role !== 'admin') {
+            return res.redirect('/log-in/admin'); // Redirect if not an admin
+        }
+        req.logIn(user, (err) => {
+            if (err) {
+                return next(err);
+            }
+            return res.redirect('/admin'); // Redirect to admin dashboard
+        });
+    })(req, res, next);
+};
+
 module.exports = {
   getLogin,
   logIn,
   logOut,
+  handleLoginAdmin,
+  getAdminLogin,
 }

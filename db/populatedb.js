@@ -65,6 +65,8 @@ ALTER TABLE Ratings ADD CONSTRAINT fk_conductor_rating FOREIGN KEY (conductor_id
 
 ALTER TABLE Ratings ADD COLUMN comment TEXT;
 
+ALTER TABLE Users ADD COLUMN role VARCHAR(20) DEFAULT 'user';
+
 -- Populate Route Table
 INSERT INTO Route (route_id, route_name, price) VALUES
 ('route01', 'Mohammadpur A', 100.00),

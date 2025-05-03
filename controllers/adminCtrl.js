@@ -28,6 +28,7 @@ async function renderEntityDetails(req, res, title, tableName, pk) {
         const data = await db.getAllStuff(tableName); 
         const idsOfTablesObjs = await db.getAllIdFromTable(pk, tableName); //gets all pk from table, but as object at first
         const idsOfTables = idsOfTablesObjs.map(obj => obj[pk]); // then extract the IDs from the objects
+        const idColumn = tableName === "Users" ? "user_id" : tableName === "Ratings" ? "rating_id" : tableName === "Bus" ? "bus_id" : tableName === "Driver" ? "driver_id" : tableName === "Conductor" ? "conductor_id" : tableName === "Route" ? "route_id" : null;
        
         res.render("entityDetails", {
             title: title,
@@ -35,6 +36,7 @@ async function renderEntityDetails(req, res, title, tableName, pk) {
             colNames: getColNames(data[0]), 
             primaryKeys: idsOfTables,
             tableName: tableName,
+            idColumn: idColumn,
         });
     } catch (error) {
         console.error(`Error fetching ${title.toLowerCase()}:`, error);
@@ -71,19 +73,19 @@ async function updateTableValue(req, res) {
     const idValue = req.params.primaryKeys;
     const newValue = req.query.newValue; // Assuming the new value is passed as a query parameter
 
-    const extractedTableName = columnName.split("_")[0]; // Extract the table name from the column name
-    const result = await db.getAllStuffById(extractedTableName, columnName, newValue)
+    if (columnName.includes("id")) {
+        const extractedTableName = columnName.split("_")[0]; // Extract the table name from the column name
+        const result = await db.getAllStuffById(extractedTableName, columnName, newValue)
+        if(result.length != 1){
+            console.log('id not found in table:', extractedTableName);
+            return res.status(400).send('<script>alert("ID does not exist"); window.location.href="/admin";</script>');
+        }
+    }
     // why did this take me so long
 
     console.log('newValue:', newValue);
     console.log('columnName:', columnName);
-    console.log('extractedTableName:', extractedTableName);
-    console.log('values exist in table or not:', result);
 
-    if(result.length != 1){
-        console.log('id not found in table:', extractedTableName);
-        return res.status(400).send('<script>alert("ID does not exist"); window.location.href="/admin";</script>');
-    }
     //console.log('req query:', req.query);
     //console.log('req.params:', req.params);
 
@@ -133,6 +135,13 @@ async function addNew(req, res){
     }
 }
 
+function ensureAdminAuthenticated(req, res, next) {
+    if (req.isAuthenticated() && req.user && req.user.role === 'admin') {
+        return next(); // User is authenticated and has the 'admin' role
+    }
+    res.redirect('/log-in'); // Redirect to login if not authenticated
+}
+
 
 module.exports = {
     getAdminView,
@@ -146,5 +155,5 @@ module.exports = {
     updateTableValue, 
     addNew,
     getAddNew,
-
+    ensureAdminAuthenticated,
 }

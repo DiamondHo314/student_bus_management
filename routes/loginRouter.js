@@ -6,4 +6,8 @@ loginRouter.get('/', loginController.getLogin)
 loginRouter.post('/', loginController.logIn)
 loginRouter.get('/log-out', loginController.logOut)
 
+//admin login routes
+loginRouter.get('/admin', loginController.getAdminLogin)
+loginRouter.post('/admin', loginController.handleLoginAdmin)
+
 module.exports = loginRouter

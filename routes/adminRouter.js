@@ -1,6 +1,8 @@
 const express = require('express');
 const adminRouter = express.Router();
 const adminController = require('../controllers/adminCtrl');
+
+adminRouter.use(adminController.ensureAdminAuthenticated) //this is checked before handling every route
  
 adminRouter.get('/', adminController.getAdminView)
 adminRouter.get('/Bus', adminController.getAllBuses)
@@ -18,5 +20,6 @@ adminRouter.get('/delete/:tableName/:primaryKeys', adminController.adminDeleteRo
 
 //update requests
 adminRouter.get('/:tableName/edit/:col/:primaryKeys', adminController.updateTableValue)
+
 
 module.exports = adminRouter;
